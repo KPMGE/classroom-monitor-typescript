@@ -31,7 +31,6 @@ const getStudentsSubmissions = async (classroom, courseWorkId) => {
         courseId: COURSE_ID,
         courseWorkId,
         late: "LATE_VALUES_UNSPECIFIED",
-        pageSize: 30,
         states: ["TURNED_IN"],
       }
     );
