@@ -1,16 +1,6 @@
-import { ListStudentsRepository } from "../../../src/application/protocols"
-import { Student } from "../../../src/domain/entities/student"
-import { ListStudentsUseCase } from "../../../src/domain/protocols"
+import { ListStudentsService } from "../../../src/application/services/list-students"
 import { makeStudent } from "../../domain/mocks"
 import { ListStudentsRepositorySpy } from "../mocks"
-
-class ListStudentsService implements ListStudentsUseCase {
-  constructor(private readonly listStudentsRepo: ListStudentsRepository) { }
-
-  async list(): Promise<Student[]> {
-    return await this.listStudentsRepo.list()
-  }
-}
 
 type SutTypes = {
   repo: ListStudentsRepositorySpy
