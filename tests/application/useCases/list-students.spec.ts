@@ -40,10 +40,23 @@ class ListStudentsService implements ListStudentsUseCase {
   }
 }
 
+type SutTypes = {
+  repo: ListStudentsRepositoryMock
+  sut: ListStudentsService
+}
+
+const makeSut = (): SutTypes => {
+  const repo = new ListStudentsRepositoryMock()
+  const sut = new ListStudentsService(repo)
+  return {
+    repo,
+    sut
+  }
+}
+
 describe('list students', () => {
   it('should call repository only once', () => {
-    const repo = new ListStudentsRepositoryMock()
-    const sut = new ListStudentsService(repo)
+    const { repo, sut } = makeSut()
 
     sut.list()
 
@@ -51,8 +64,7 @@ describe('list students', () => {
   })
 
   it('should throw if repository throws', () => {
-    const repo = new ListStudentsRepositoryMock()
-    const sut = new ListStudentsService(repo)
+    const { repo, sut } = makeSut()
     repo.list = () => { throw new Error() }
 
     const promise = sut.list()
