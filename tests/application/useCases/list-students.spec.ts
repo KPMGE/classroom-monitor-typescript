@@ -1,11 +1,8 @@
 import { Student } from "../../../src/domain/entities/student"
+import { ListStudentsUseCase } from "../../../src/domain/protocols"
 import { makeStudent } from "../../domain/mocks"
 
 interface ListStudentsRepository {
-  list(): Promise<Student[]>
-}
-
-interface ListStudentsUseCase {
   list(): Promise<Student[]>
 }
 
