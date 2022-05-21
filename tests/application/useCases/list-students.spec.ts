@@ -1,10 +1,7 @@
+import { ListStudentsRepository } from "../../../src/application/protocols"
 import { Student } from "../../../src/domain/entities/student"
 import { ListStudentsUseCase } from "../../../src/domain/protocols"
 import { makeStudent } from "../../domain/mocks"
-
-interface ListStudentsRepository {
-  list(): Promise<Student[]>
-}
 
 class ListStudentsRepositorySpy implements ListStudentsRepository {
   callsCount = 0
