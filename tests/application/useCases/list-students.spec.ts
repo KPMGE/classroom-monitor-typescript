@@ -49,4 +49,14 @@ describe('list students', () => {
 
     expect(repo.callsCount).toBe(1)
   })
+
+  it('should throw if repository throws', () => {
+    const repo = new ListStudentsRepositoryMock()
+    const sut = new ListStudentsService(repo)
+    repo.list = () => { throw new Error() }
+
+    const promise = sut.list()
+
+    expect(promise).rejects.toThrow()
+  })
 })
