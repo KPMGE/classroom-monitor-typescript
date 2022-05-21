@@ -2,16 +2,7 @@ import { ListStudentsRepository } from "../../../src/application/protocols"
 import { Student } from "../../../src/domain/entities/student"
 import { ListStudentsUseCase } from "../../../src/domain/protocols"
 import { makeStudent } from "../../domain/mocks"
-
-class ListStudentsRepositorySpy implements ListStudentsRepository {
-  callsCount = 0
-  students = [makeStudent()]
-
-  async list(): Promise<Student[]> {
-    this.callsCount++
-    return this.students
-  }
-}
+import { ListStudentsRepositorySpy } from "../mocks"
 
 class ListStudentsService implements ListStudentsUseCase {
   constructor(private readonly listStudentsRepo: ListStudentsRepository) { }
