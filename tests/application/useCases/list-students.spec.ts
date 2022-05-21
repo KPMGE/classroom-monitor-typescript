@@ -1,23 +1,5 @@
-import { CourseWork } from "../../../src/domain/entities/course-work"
 import { Student } from "../../../src/domain/entities/student"
-import { Submission } from "../../../src/domain/entities/submission"
-
-const makeCourseWork = (): CourseWork => ({
-  title: "any title",
-  description: "any description"
-})
-
-const makeSubmission = (): Submission => ({
-  late: false,
-  courseWork: makeCourseWork()
-})
-
-const makeStudent = (): Student => ({
-  id: 'any id',
-  name: 'any name',
-  email: 'any email',
-  submissions: [makeSubmission()]
-})
+import { makeStudent } from "../../domain/mocks"
 
 interface ListStudentsRepository {
   list(): Promise<Student[]>
