@@ -1,19 +1,6 @@
-type CourseWork = {
-  title: string
-  description: string
-};
-
-type Submission = {
-  late: boolean
-  courseWork: CourseWork
-};
-
-type Student = {
-  id: string
-  name: string
-  email: string
-  submissions: Submission[]
-};
+import { CourseWork } from "../../../src/domain/entities/course-work"
+import { Student } from "../../../src/domain/entities/student"
+import { Submission } from "../../../src/domain/entities/submission"
 
 const makeCourseWork = (): CourseWork => ({
   title: "any title",
