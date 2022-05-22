@@ -1,18 +1,8 @@
-import { Student } from "../../../src/domain/entities"
 import { ListStudentsUseCase } from "../../../src/domain/protocols"
 import { ok, serverError } from "../../../src/presentation/helpers"
 import { Controller, HttpResponse } from "../../../src/presentation/protocols"
 import { makeStudent } from "../../domain/mocks"
-
-class ListStudentsServiceMock implements ListStudentsUseCase {
-  callsCount = 0
-  students = [makeStudent()]
-
-  async list(): Promise<Student[]> {
-    this.callsCount++
-    return this.students
-  }
-}
+import { ListStudentsServiceMock } from "../mocks"
 
 class ListStudentsController implements Controller {
   constructor(private readonly listStudentsService: ListStudentsUseCase) { }
