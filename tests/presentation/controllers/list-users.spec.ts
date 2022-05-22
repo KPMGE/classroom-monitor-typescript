@@ -26,13 +26,19 @@ const serverError = (error: Error): HttpResponse => ({
   body: error
 })
 
+const ok = (data: any): HttpResponse => ({
+  statusCode: 200,
+  body: data
+})
+
 
 class ListStudentsController implements Controller {
   constructor(private readonly listStudentsService: ListStudentsUseCase) { }
 
   async handle(): Promise<HttpResponse> {
     try {
-      await this.listStudentsService.list()
+      const students = await this.listStudentsService.list()
+      return ok(students)
     } catch (err) {
       return serverError(err)
     }
@@ -70,5 +76,14 @@ describe('list students', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new Error('service error'))
+  })
+
+  it('should return ok on success', async () => {
+    const { sut } = makeSut()
+
+    const httpResponse = await sut.handle()
+
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual([makeStudent()])
   })
 })
