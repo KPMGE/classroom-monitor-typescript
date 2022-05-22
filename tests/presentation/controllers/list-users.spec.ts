@@ -1,5 +1,6 @@
 import { Student } from "../../../src/domain/entities"
 import { ListStudentsUseCase } from "../../../src/domain/protocols"
+import { ok, serverError } from "../../../src/presentation/helpers"
 import { Controller, HttpResponse } from "../../../src/presentation/protocols"
 import { makeStudent } from "../../domain/mocks"
 
@@ -12,17 +13,6 @@ class ListStudentsServiceMock implements ListStudentsUseCase {
     return this.students
   }
 }
-
-const serverError = (error: Error): HttpResponse => ({
-  statusCode: 500,
-  body: error
-})
-
-const ok = (data: any): HttpResponse => ({
-  statusCode: 200,
-  body: data
-})
-
 
 class ListStudentsController implements Controller {
   constructor(private readonly listStudentsService: ListStudentsUseCase) { }
