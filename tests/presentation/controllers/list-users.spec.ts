@@ -1,5 +1,6 @@
 import { Student } from "../../../src/domain/entities"
 import { ListStudentsUseCase } from "../../../src/domain/protocols"
+import { Controller, HttpResponse } from "../../../src/presentation/protocols"
 import { makeStudent } from "../../domain/mocks"
 
 class ListStudentsServiceMock implements ListStudentsUseCase {
@@ -10,15 +11,6 @@ class ListStudentsServiceMock implements ListStudentsUseCase {
     this.callsCount++
     return this.students
   }
-}
-
-type HttpResponse = {
-  statusCode: number
-  body: any
-}
-
-interface Controller {
-  handle(): Promise<HttpResponse>
 }
 
 const serverError = (error: Error): HttpResponse => ({
