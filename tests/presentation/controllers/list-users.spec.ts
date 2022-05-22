@@ -2,7 +2,7 @@ import { ListStudentsUseCase } from "../../../src/domain/protocols"
 import { ok, serverError } from "../../../src/presentation/helpers"
 import { Controller, HttpResponse } from "../../../src/presentation/protocols"
 import { makeStudent } from "../../domain/mocks"
-import { ListStudentsServiceMock } from "../mocks"
+import { ListStudentsServiceSpy } from "../mocks"
 
 class ListStudentsController implements Controller {
   constructor(private readonly listStudentsService: ListStudentsUseCase) { }
@@ -18,31 +18,31 @@ class ListStudentsController implements Controller {
 }
 
 type SutTypes = {
-  serviceMock: ListStudentsServiceMock
+  serviceSpy: ListStudentsServiceSpy
   sut: ListStudentsController
 }
 
 const makeSut = (): SutTypes => {
-  const serviceMock = new ListStudentsServiceMock()
-  const sut = new ListStudentsController(serviceMock)
+  const serviceSpy = new ListStudentsServiceSpy()
+  const sut = new ListStudentsController(serviceSpy)
   return {
     sut,
-    serviceMock
+    serviceSpy
   }
 }
 
 describe('list students', () => {
   it('should call service only once', () => {
-    const { sut, serviceMock } = makeSut()
+    const { sut, serviceSpy } = makeSut()
 
     sut.handle()
 
-    expect(serviceMock.callsCount).toBe(1)
+    expect(serviceSpy.callsCount).toBe(1)
   })
 
   it('should return serverError if service throws', async () => {
-    const { sut, serviceMock } = makeSut()
-    serviceMock.list = () => { throw new Error('service error') }
+    const { sut, serviceSpy } = makeSut()
+    serviceSpy.list = () => { throw new Error('service error') }
 
     const httpResponse = await sut.handle()
 
