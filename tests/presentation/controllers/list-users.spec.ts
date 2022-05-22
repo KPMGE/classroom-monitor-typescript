@@ -27,13 +27,26 @@ class ListStudentsController implements Controller {
   }
 }
 
+type SutTypes = {
+  serviceMock: ListStudentsServiceMock
+  sut: ListStudentsController
+}
+
+const makeSut = (): SutTypes => {
+  const serviceMock = new ListStudentsServiceMock()
+  const sut = new ListStudentsController(serviceMock)
+  return {
+    sut,
+    serviceMock
+  }
+}
+
 describe('list students', () => {
   it('should call service only once', () => {
-    const service = new ListStudentsServiceMock()
-    const sut = new ListStudentsController(service)
+    const { sut, serviceMock } = makeSut()
 
     sut.handle()
 
-    expect(service.callsCount).toBe(1)
+    expect(serviceMock.callsCount).toBe(1)
   })
 })
