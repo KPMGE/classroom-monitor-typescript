@@ -1,1 +1,1 @@
-export * from './list-students-repository'
+export * from './list-course-works-repository'

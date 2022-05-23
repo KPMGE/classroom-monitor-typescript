@@ -1,6 +1,8 @@
-import { CourseWork } from "./course-work"
+import { Student } from "./student"
 
 export type Submission = {
+  id: string
+  studentId: string
   late: boolean
-  courseWork: CourseWork
+  student: Student
 }

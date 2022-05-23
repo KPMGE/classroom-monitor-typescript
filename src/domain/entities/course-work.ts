@@ -1,4 +1,7 @@
+import { Submission } from './submission'
+
 export type CourseWork = {
+  id: string
   title: string
-  description: string
+  submissions: Submission[]
 }
