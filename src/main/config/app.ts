@@ -9,4 +9,10 @@ const app = express()
 
 setupRoutes(app)
 
+app.use((req, res, next, err) => {
+  res.json({
+    error: err.message
+  })
+})
+
 export { app }

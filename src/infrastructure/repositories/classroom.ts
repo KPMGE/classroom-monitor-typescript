@@ -11,11 +11,13 @@ const getAllCourseWorks = async (classroom: classroom_v1.Classroom, courseId: st
     fields: 'courseWork.id,courseWork.title'
   })
 
-  let courseWorks = response.data.courseWork.map<CourseWork>(courseWork => ({
-    id: courseWork.id,
-    title: courseWork.title,
-    submissions: []
-  }))
+  let courseWorks = response.data.courseWork.map<CourseWork>(courseWork => {
+    return {
+      id: courseWork.id,
+      title: courseWork.title,
+      submissions: []
+    }
+  })
 
 
   for (const courseWork of courseWorks) {

@@ -50,7 +50,7 @@ class Classroom {
   private async authorize(credentialsPath: string, tokenPath: string, scopes: string[]): Promise<OAuth2Client> {
     const data = readFileSync(credentialsPath, 'utf8')
     const jsonData = JSON.parse(data)
-    const credentials: Credential = jsonData.installed
+    const credentials: Credential = jsonData.installed ?? jsonData.web
 
     const { client_secret, client_id, redirect_uris } = credentials
 
