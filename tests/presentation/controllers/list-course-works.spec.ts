@@ -1,15 +1,5 @@
-import { CourseWork } from "../../../src/domain/entities"
-import { ListCourseWorksUseCase } from "../../../src/domain/protocols/list-course-works"
 import { ListCourseWorksController } from "../../../src/presentation/controllers"
-import { makeCourseWork } from "../../domain/mocks"
-
-class ListCourseWorksServiceMock implements ListCourseWorksUseCase {
-  courseWorks = [makeCourseWork(), makeCourseWork()]
-
-  async list(): Promise<CourseWork[]> {
-    return this.courseWorks
-  }
-}
+import { ListCourseWorksServiceMock } from "../mocks"
 
 type SutTypes = {
   service: ListCourseWorksServiceMock
