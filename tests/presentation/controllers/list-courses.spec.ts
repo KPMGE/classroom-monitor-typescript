@@ -1,26 +1,12 @@
 import { Course } from '../../../src/domain/entities'
 import { ListCoursesUseCase } from '../../../src/domain/protocols'
-import { ok, serverError } from '../../../src/presentation/helpers'
-import { Controller, HttpResponse } from '../../../src/presentation/protocols'
+import { ListCoursesController } from '../../../src/presentation/controllers'
 import { makeFakeCourse } from '../../domain/mocks'
 
 class ListCoursesServiceMock implements ListCoursesUseCase {
   courses = [makeFakeCourse(), makeFakeCourse()]
   async list(): Promise<Course[]> {
     return this.courses
-  }
-}
-
-class ListCoursesController implements Controller {
-  constructor(private readonly listCoursesUseCase: ListCoursesUseCase) { }
-
-  async handle(): Promise<HttpResponse> {
-    try {
-      const courses = await this.listCoursesUseCase.list()
-      return ok(courses)
-    } catch (error) {
-      return serverError(error)
-    }
   }
 }
 
