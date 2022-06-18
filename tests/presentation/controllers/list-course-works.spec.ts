@@ -11,10 +11,23 @@ class ListCourseWorksServiceMock implements ListCourseWorksUseCase {
   }
 }
 
+type SutTypes = {
+  service: ListCourseWorksServiceMock
+  sut: ListCourseWorksController
+}
+
+const makeSut = (): SutTypes => {
+  const service = new ListCourseWorksServiceMock()
+  const sut = new ListCourseWorksController(service)
+  return {
+    service,
+    sut
+  }
+}
+
 describe('list-course-works-controller', () => {
   it('should return server error if service throws', async () => {
-    const service = new ListCourseWorksServiceMock()
-    const sut = new ListCourseWorksController(service)
+    const { service, sut } = makeSut()
     service.list = () => { throw new Error('service error') }
 
     const httpResponse = await sut.handle()
