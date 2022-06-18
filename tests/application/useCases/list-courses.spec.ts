@@ -1,4 +1,5 @@
 import { ListCoursesRepository } from "../../../src/application/protocols"
+import { ListCoursesService } from "../../../src/application/services/list-courses"
 import { Course } from "../../../src/domain/entities"
 import { ListCoursesUseCase } from "../../../src/domain/protocols"
 
@@ -17,18 +18,9 @@ class ListCoursesRepositoryMock implements ListCoursesRepository {
   }
 }
 
-class ListCoursesService implements ListCoursesUseCase {
-  constructor(private readonly listCoursesRepository: ListCoursesRepository) { }
-
-  async list(): Promise<Course[]> {
-    const courses = await this.listCoursesRepository.list()
-    return courses
-  }
-}
-
 type SutTypes = {
   repo: ListCoursesRepositoryMock
-  sut: ListCoursesService
+  sut: ListCoursesUseCase
 }
 
 const makeSut = (): SutTypes => {
