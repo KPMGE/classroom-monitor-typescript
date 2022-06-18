@@ -1,9 +1,6 @@
+import { ListCoursesRepository } from "../../../src/application/protocols"
 import { Course } from "../../../src/domain/entities"
 import { ListCoursesUseCase } from "../../../src/domain/protocols"
-
-interface ListCoursesRepository {
-  list(): Promise<Course[]>
-}
 
 const makeFakeCourse = (): Course => ({
   id: 'fake_course_id',
