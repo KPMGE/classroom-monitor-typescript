@@ -37,4 +37,14 @@ describe('list-courses', () => {
 
     expect(repo.callsCount).toBe(1)
   })
+
+  it('should throw if repository throws', async () => {
+    const repo = new ListCoursesRepositoryMock()
+    repo.list = () => { throw new Error('repo error') }
+    const sut = new ListCoursesService(repo)
+
+    const promise = sut.list()
+
+    expect(promise).rejects.toThrowError(new Error('repo error'))
+  })
 })
