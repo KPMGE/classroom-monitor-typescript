@@ -1,14 +1,5 @@
-import { Course } from '../../../src/domain/entities'
-import { ListCoursesUseCase } from '../../../src/domain/protocols'
 import { ListCoursesController } from '../../../src/presentation/controllers'
-import { makeFakeCourse } from '../../domain/mocks'
-
-class ListCoursesServiceMock implements ListCoursesUseCase {
-  courses = [makeFakeCourse(), makeFakeCourse()]
-  async list(): Promise<Course[]> {
-    return this.courses
-  }
-}
+import { ListCoursesServiceMock } from '../mocks/list-courses'
 
 type SutTypes = {
   sut: ListCoursesController,
