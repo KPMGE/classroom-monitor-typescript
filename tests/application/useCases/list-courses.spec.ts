@@ -8,7 +8,7 @@ const makeFakeCourse = (): Course => ({
   title: 'fake_course_title'
 })
 
-class ListCoursesRepositoryMock implements ListCoursesRepository {
+class ListCoursesRepositorySpy implements ListCoursesRepository {
   callsCount = 0
   courses = [makeFakeCourse(), makeFakeCourse()]
 
@@ -19,12 +19,12 @@ class ListCoursesRepositoryMock implements ListCoursesRepository {
 }
 
 type SutTypes = {
-  repo: ListCoursesRepositoryMock
+  repo: ListCoursesRepositorySpy
   sut: ListCoursesUseCase
 }
 
 const makeSut = (): SutTypes => {
-  const repo = new ListCoursesRepositoryMock()
+  const repo = new ListCoursesRepositorySpy()
   const sut = new ListCoursesService(repo)
 
   return {
