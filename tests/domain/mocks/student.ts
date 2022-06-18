@@ -1,9 +1,6 @@
-import { Student } from "../../../src/domain/entities/student"
-import { makeSubmission } from "./course-work"
+import { Student } from "../../../src/domain/entities"
 
 export const makeStudent = (): Student => ({
-  id: 'any id',
-  name: 'any name',
-  email: 'any email',
-  submissions: [makeSubmission()]
+  name: 'any_student_name',
+  email: 'any_valid_email@gmail.com'
 })

@@ -2,10 +2,10 @@ import { CourseWork } from "../../domain/entities"
 import { ListCourseWorksUseCase } from "../../domain/protocols/list-course-works"
 import { ListCourseWorksRepository } from "../protocols"
 
-export class ListCourseWorks implements ListCourseWorksUseCase {
+export class ListCourseWorksService implements ListCourseWorksUseCase {
   constructor(private readonly listCourseWorksRepo: ListCourseWorksRepository) { }
 
-  async list(): Promise<CourseWork> {
+  async list(): Promise<CourseWork[]> {
     return await this.listCourseWorksRepo.list()
   }
 }

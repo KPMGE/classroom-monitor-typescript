@@ -1,5 +1,4 @@
-import { ListStudentsController } from "../../../src/presentation/controllers/list-students"
-import { makeStudent } from "../../domain/mocks"
+import { ListStudentsController } from "../../../src/presentation/controllers"
 import { ListStudentsServiceSpy } from "../mocks"
 
 type SutTypes = {
@@ -36,11 +35,11 @@ describe('list students', () => {
   })
 
   it('should return ok on success', async () => {
-    const { sut } = makeSut()
+    const { sut, serviceSpy } = makeSut()
 
     const httpResponse = await sut.handle()
 
     expect(httpResponse.statusCode).toBe(200)
-    expect(httpResponse.body).toEqual([makeStudent()])
+    expect(httpResponse.body).toEqual(serviceSpy.students)
   })
 })
