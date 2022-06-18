@@ -20,10 +20,23 @@ class ListCoursesController implements Controller {
   }
 }
 
+type SutTypes = {
+  sut: ListCoursesController,
+  service: ListCoursesServiceMock
+}
+
+const makeSut = (): SutTypes => {
+  const service = new ListCoursesServiceMock()
+  const sut = new ListCoursesController(service)
+  return {
+    service,
+    sut
+  }
+}
+
 describe('list-courses-controller', () => {
   it('should return right data on success', async () => {
-    const service = new ListCoursesServiceMock()
-    const sut = new ListCoursesController(service)
+    const { sut, service } = makeSut()
 
     const httpResponse = await sut.handle()
 
