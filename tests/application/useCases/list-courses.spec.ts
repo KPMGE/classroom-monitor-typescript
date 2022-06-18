@@ -1,8 +1,5 @@
 import { Course } from "../../../src/domain/entities"
-
-interface ListCoursesUseCase {
-  list(): Promise<Course[]>
-}
+import { ListCoursesUseCase } from "../../../src/domain/protocols"
 
 interface ListCoursesRepository {
   list(): Promise<Course[]>
