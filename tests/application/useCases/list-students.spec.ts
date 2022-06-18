@@ -1,5 +1,4 @@
-import { ListStudentsService } from "../../../src/application/services/list-students"
-import { makeStudent } from "../../domain/mocks"
+import { ListStudentsService } from "../../../src/application/services"
 import { ListStudentsRepositorySpy } from "../mocks"
 
 type SutTypes = {
@@ -35,11 +34,10 @@ describe('list students', () => {
   })
 
   it('should return a valid list of students', async () => {
-    const { sut } = makeSut()
+    const { sut, repo } = makeSut()
 
     const students = await sut.list()
 
-    expect(students.length).toBe(1)
-    expect(students[0]).toEqual(makeStudent())
+    expect(students).toEqual(repo.students)
   })
 })
