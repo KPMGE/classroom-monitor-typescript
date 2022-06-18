@@ -35,4 +35,13 @@ describe('list-course-works-controller', () => {
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new Error('service error'))
   })
+
+  it('should return ok on success', async () => {
+    const { service, sut } = makeSut()
+
+    const httpResponse = await sut.handle()
+
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual(service.courseWorks)
+  })
 })
