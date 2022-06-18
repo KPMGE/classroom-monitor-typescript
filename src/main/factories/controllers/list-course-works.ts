@@ -1,6 +1,6 @@
 import { ListCourseWorksController } from "../../../presentation/controllers"
-import { makeClassroomListCourseWorksRepository } from "../services"
+import { makeListCourseWorksService } from "../services"
 
 export const makeListCourseWorksController = (): ListCourseWorksController => {
-  return new ListCourseWorksController(makeClassroomListCourseWorksRepository())
+  return new ListCourseWorksController(makeListCourseWorksService())
 }

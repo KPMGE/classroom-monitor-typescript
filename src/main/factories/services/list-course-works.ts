@@ -1,7 +1,9 @@
-import { ListCourseWorksRepository } from "../../../application/protocols"
+import { ListCourseWorksService } from "../../../application/services"
+import { ListCourseWorksUseCase } from "../../../domain/protocols/list-course-works"
 import { ClassroomRepository } from "../../../infrastructure/repositories"
 
-export const makeClassroomListCourseWorksRepository = (): ListCourseWorksRepository => {
-  const listRepo = new ClassroomRepository()
-  return listRepo
+export const makeListCourseWorksService = (): ListCourseWorksUseCase => {
+  const repo = new ClassroomRepository()
+  const service = new ListCourseWorksService(repo)
+  return service
 }
