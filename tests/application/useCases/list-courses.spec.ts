@@ -4,27 +4,34 @@ type Course = {
 }
 
 interface ListCoursesUseCase {
-  list(): Promise<Course>
+  list(): Promise<Course[]>
 }
 
 interface ListCoursesRepository {
-  list(): Promise<Course>
+  list(): Promise<Course[]>
 }
+
+const makeFakeCourse = (): Course => ({
+  id: 'fake_course_id',
+  title: 'fake_course_title'
+})
 
 class ListCoursesRepositoryMock implements ListCoursesRepository {
   callsCount = 0
-  async list(): Promise<Course> {
+  courses = [makeFakeCourse(), makeFakeCourse()]
+
+  async list(): Promise<Course[]> {
     this.callsCount++
-    return null
+    return this.courses
   }
 }
 
 class ListCoursesService implements ListCoursesUseCase {
   constructor(private readonly listCoursesRepository: ListCoursesRepository) { }
 
-  async list(): Promise<Course> {
-    this.listCoursesRepository.list()
-    return null
+  async list(): Promise<Course[]> {
+    const courses = await this.listCoursesRepository.list()
+    return courses
   }
 }
 
@@ -58,5 +65,13 @@ describe('list-courses', () => {
     const promise = sut.list()
 
     expect(promise).rejects.toThrowError(new Error('repo error'))
+  })
+
+  it('should return right data', async () => {
+    const { sut, repo } = makeSut()
+
+    const courses = await sut.list()
+
+    expect(courses).toEqual(repo.courses)
   })
 })
