@@ -1,6 +1,6 @@
 import { Course } from '../../../src/domain/entities'
 import { ListCoursesUseCase } from '../../../src/domain/protocols'
-import { ok } from '../../../src/presentation/helpers'
+import { ok, serverError } from '../../../src/presentation/helpers'
 import { Controller, HttpResponse } from '../../../src/presentation/protocols'
 import { makeFakeCourse } from '../../domain/mocks'
 
@@ -15,8 +15,12 @@ class ListCoursesController implements Controller {
   constructor(private readonly listCoursesUseCase: ListCoursesUseCase) { }
 
   async handle(): Promise<HttpResponse> {
-    const courses = await this.listCoursesUseCase.list()
-    return ok(courses)
+    try {
+      const courses = await this.listCoursesUseCase.list()
+      return ok(courses)
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
 
@@ -42,5 +46,15 @@ describe('list-courses-controller', () => {
 
     expect(httpResponse.statusCode).toBe(200)
     expect(httpResponse.body).toEqual(service.courses)
+  })
+
+  it('should return server error if service returns error', async () => {
+    const { sut, service } = makeSut()
+    service.list = () => { throw new Error('service error') }
+
+    const httpResponse = await sut.handle()
+
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new Error('service error'))
   })
 })
