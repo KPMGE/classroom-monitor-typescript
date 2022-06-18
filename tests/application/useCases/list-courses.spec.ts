@@ -1,7 +1,4 @@
-type Course = {
-  id: string
-  title: string
-}
+import { Course } from "../../../src/domain/entities"
 
 interface ListCoursesUseCase {
   list(): Promise<Course[]>
