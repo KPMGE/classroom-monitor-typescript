@@ -1,5 +1,5 @@
 import { classroom_v1 } from "googleapis"
-import { ListCoursesRepository, ListCourseWorksRepository } from "../../application/protocols"
+import { ListCoursesRepository, ListCourseWorksRepository, ListStudentsRepository } from "../../application/protocols"
 import { Course, CourseWork, Student, Submission } from "../../domain/entities"
 import { classroomHelper } from './classroom-helper'
 
@@ -75,7 +75,18 @@ const listCourses = async (classroom: classroom_v1.Classroom): Promise<Course[]>
   return courses
 }
 
-export class ClassroomRepository implements ListCourseWorksRepository, ListCoursesRepository {
+const listStudents = async (classroom: classroom_v1.Classroom, courseId: string): Promise<Student[]> => {
+  const response = await classroom.courses.students.list({ courseId })
+
+  const students = response.data.students.map<Student>(student => ({
+    name: student.profile.name.fullName,
+    email: student.profile.emailAddress
+  }))
+
+  return students
+}
+
+export class ClassroomRepository implements ListCourseWorksRepository, ListCoursesRepository, ListStudentsRepository {
   async list(): Promise<CourseWork[]> {
     const courseWorks = await getAllCourseWorks(classroomHelper.instance, classroomHelper.courseId)
     return courseWorks
@@ -83,5 +94,9 @@ export class ClassroomRepository implements ListCourseWorksRepository, ListCours
 
   async listCourses(): Promise<Course[]> {
     return await listCourses(classroomHelper.instance)
+  }
+
+  async listStudents(): Promise<Student[]> {
+    return await listStudents(classroomHelper.instance, classroomHelper.courseId)
   }
 }
