@@ -1,17 +1,5 @@
-import { ListCourseWorksRepository } from "../../../src/application/protocols"
 import { ListCourseWorksService } from "../../../src/application/services"
-import { CourseWork } from "../../../src/domain/entities"
-import { makeCourseWork } from "../../domain/mocks"
-
-class ListCourseWorksRepositorySpy implements ListCourseWorksRepository {
-  courseWorks = [makeCourseWork(), makeCourseWork()]
-  callsCount = 0
-
-  async list(): Promise<CourseWork[]> {
-    this.callsCount++
-    return this.courseWorks
-  }
-}
+import { ListCourseWorksRepositorySpy } from "../mocks/list-course-works"
 
 type SutTypes = {
   sut: ListCourseWorksService,
