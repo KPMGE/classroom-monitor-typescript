@@ -6,7 +6,7 @@ export class ListCoursesRepositorySpy implements ListCoursesRepository {
   callsCount = 0
   courses = [makeFakeCourse(), makeFakeCourse()]
 
-  async list(): Promise<Course[]> {
+  async listCourses(): Promise<Course[]> {
     this.callsCount++
     return this.courses
   }

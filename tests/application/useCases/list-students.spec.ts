@@ -26,7 +26,7 @@ describe('list students', () => {
 
   it('should throw if repository throws', async () => {
     const { repo, sut } = makeSut()
-    repo.list = () => { throw new Error() }
+    repo.listStudents = () => { throw new Error() }
 
     const promise = sut.list()
 
