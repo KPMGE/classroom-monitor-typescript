@@ -1,8 +1,9 @@
-import { Submission } from "../../../src/domain/entities/submission"
-import { makeCourseWork } from "../../domain/mocks/submission"
+import { CourseWork } from "../../../src/domain/entities/course-work"
+import { makeSubmission } from "./submission"
 
-export const makeSubmission = (): Submission => ({
-  late: false,
-  courseWork: makeCourseWork()
+export const makeCourseWork = (): CourseWork => ({
+  id: 'any_course_work_id',
+  title: "any title",
+  submissions: [makeSubmission(), makeSubmission()]
 })
 

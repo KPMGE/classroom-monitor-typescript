@@ -1,22 +1,6 @@
-import { ListCoursesRepository } from "../../../src/application/protocols"
 import { ListCoursesService } from "../../../src/application/services/list-courses"
-import { Course } from "../../../src/domain/entities"
 import { ListCoursesUseCase } from "../../../src/domain/protocols"
-
-const makeFakeCourse = (): Course => ({
-  id: 'fake_course_id',
-  title: 'fake_course_title'
-})
-
-class ListCoursesRepositorySpy implements ListCoursesRepository {
-  callsCount = 0
-  courses = [makeFakeCourse(), makeFakeCourse()]
-
-  async list(): Promise<Course[]> {
-    this.callsCount++
-    return this.courses
-  }
-}
+import { ListCoursesRepositorySpy } from "../mocks/list-courses"
 
 type SutTypes = {
   repo: ListCoursesRepositorySpy
