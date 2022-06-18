@@ -28,10 +28,23 @@ class ListCoursesService implements ListCoursesUseCase {
   }
 }
 
+type SutTypes = {
+  repo: ListCoursesRepositoryMock
+  sut: ListCoursesService
+}
+
+const makeSut = (): SutTypes => {
+  const repo = new ListCoursesRepositoryMock()
+  const sut = new ListCoursesService(repo)
+
+  return {
+    repo, sut
+  }
+}
+
 describe('list-courses', () => {
   it('should call repository only once', () => {
-    const repo = new ListCoursesRepositoryMock()
-    const sut = new ListCoursesService(repo)
+    const { sut, repo } = makeSut()
 
     sut.list()
 
@@ -39,9 +52,8 @@ describe('list-courses', () => {
   })
 
   it('should throw if repository throws', async () => {
-    const repo = new ListCoursesRepositoryMock()
+    const { sut, repo } = makeSut()
     repo.list = () => { throw new Error('repo error') }
-    const sut = new ListCoursesService(repo)
 
     const promise = sut.list()
 
