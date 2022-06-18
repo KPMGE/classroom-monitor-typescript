@@ -6,7 +6,7 @@ export class ListCoursesService implements ListCoursesUseCase {
   constructor(private readonly listCoursesRepository: ListCoursesRepository) { }
 
   async list(): Promise<Course[]> {
-    const courses = await this.listCoursesRepository.list()
+    const courses = await this.listCoursesRepository.listCourses()
     return courses
   }
 }
