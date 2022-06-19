@@ -1,13 +1,15 @@
 import { ListCourseWorksUseCase } from "../../domain/protocols/list-course-works"
-import { ok, serverError } from "../helpers"
-import { Controller, HttpResponse } from "../protocols"
+import { badRequest, ok, serverError } from "../helpers"
+import { Controller, HttpRequest, HttpResponse } from "../protocols"
 
 export class ListCourseWorksController implements Controller {
   constructor(private readonly listCourseWorksService: ListCourseWorksUseCase) { }
 
-  async handle(): Promise<HttpResponse> {
+  async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
-      const courseWorks = await this.listCourseWorksService.list()
+      const courseId = request.params.courseId
+      if (!courseId) return badRequest('courseId is missing!')
+      const courseWorks = await this.listCourseWorksService.list(courseId)
       return ok(courseWorks)
     } catch (err) {
       return serverError(err)
