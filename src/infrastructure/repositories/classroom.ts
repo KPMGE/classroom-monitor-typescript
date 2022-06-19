@@ -32,6 +32,7 @@ const getAllSubmissions = async (classroom: classroom_v1.Classroom, courseId: st
   const response = await classroom.courses.courseWork.studentSubmissions.list({
     courseId,
     courseWorkId,
+    states: ['TURNED_IN']
   })
 
   const submissions = response.data.studentSubmissions.map<Submission>(submmission => ({
