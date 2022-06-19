@@ -32,6 +32,7 @@ const getAllSubmissions = async (classroom: classroom_v1.Classroom, courseId: st
   const response = await classroom.courses.courseWork.studentSubmissions.list({
     courseId,
     courseWorkId,
+    states: ['TURNED_IN']
   })
 
   const submissions = response.data.studentSubmissions.map<Submission>(submmission => ({
@@ -65,7 +66,7 @@ const getStudent = async (classroom: classroom_v1.Classroom, courseId: string, u
 }
 
 const listCourses = async (classroom: classroom_v1.Classroom): Promise<Course[]> => {
-  const response = await classroom.courses.list()
+  const response = await classroom.courses.list({ teacherId: 'me' })
 
   const courses = response.data.courses.map<Course>(course => ({
     id: course.id,
