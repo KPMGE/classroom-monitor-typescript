@@ -88,10 +88,8 @@ const c = new Classroom()
 
 export const classroomHelper = {
   instance: null as classroom_v1.Classroom,
-  courseId: null as string,
 
-  async connect(credentialsPath: string, tokenPath: string, scopes: string[], courseId: string): Promise<void> {
+  async connect(credentialsPath: string, tokenPath: string, scopes: string[]): Promise<void> {
     this.instance = await c.getClassroomInstance(credentialsPath, tokenPath, scopes)
-    this.courseId = courseId
   }
 }

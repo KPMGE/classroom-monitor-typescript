@@ -96,7 +96,7 @@ export class ClassroomRepository implements ListCourseWorksRepository, ListCours
     return await listCourses(classroomHelper.instance)
   }
 
-  async listStudents(): Promise<Student[]> {
-    return await listStudents(classroomHelper.instance, classroomHelper.courseId)
+  async listStudents(courseId: string): Promise<Student[]> {
+    return await listStudents(classroomHelper.instance, courseId)
   }
 }

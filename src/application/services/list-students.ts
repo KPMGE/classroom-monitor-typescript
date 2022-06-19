@@ -5,8 +5,8 @@ import { ListStudentsRepository } from "../protocols"
 export class ListStudentsService implements ListStudentsUseCase {
   constructor(private readonly listStudentsRepository: ListStudentsRepository) { }
 
-  async list(): Promise<Student[]> {
-    const students = await this.listStudentsRepository.listStudents()
+  async list(courseId: string): Promise<Student[]> {
+    const students = await this.listStudentsRepository.listStudents(courseId)
     return students
   }
 }
