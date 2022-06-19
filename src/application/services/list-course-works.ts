@@ -6,6 +6,6 @@ export class ListCourseWorksService implements ListCourseWorksUseCase {
   constructor(private readonly listCourseWorksRepo: ListCourseWorksRepository) { }
 
   async list(): Promise<CourseWork[]> {
-    return await this.listCourseWorksRepo.list()
+    return await this.listCourseWorksRepo.listCourseWorks()
   }
 }
