@@ -4,9 +4,11 @@ import { makeStudent } from "../../domain/mocks"
 
 export class ListStudentsRepositorySpy implements ListStudentsRepository {
   callsCount = 0
+  courseId = ""
   students = [makeStudent(), makeStudent()]
 
-  async listStudents(): Promise<Student[]> {
+  async listStudents(courseId: string): Promise<Student[]> {
+    this.courseId = courseId
     this.callsCount++
     return this.students
   }

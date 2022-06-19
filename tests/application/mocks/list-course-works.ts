@@ -5,8 +5,10 @@ import { makeCourseWork } from "../../domain/mocks"
 export class ListCourseWorksRepositorySpy implements ListCourseWorksRepository {
   courseWorks = [makeCourseWork(), makeCourseWork()]
   callsCount = 0
+  courseId = ""
 
-  async list(): Promise<CourseWork[]> {
+  async listCourseWorks(courseId: string): Promise<CourseWork[]> {
+    this.courseId = courseId
     this.callsCount++
     return this.courseWorks
   }

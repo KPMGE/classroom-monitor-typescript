@@ -1,5 +1,5 @@
 import { CourseWork } from "../../domain/entities"
 
 export interface ListCourseWorksRepository {
-  list(): Promise<CourseWork[]>
+  listCourseWorks(courseId: string): Promise<CourseWork[]>
 }

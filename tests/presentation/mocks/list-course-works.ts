@@ -4,8 +4,10 @@ import { makeCourseWork } from "../../domain/mocks"
 
 export class ListCourseWorksServiceMock implements ListCourseWorksUseCase {
   courseWorks = [makeCourseWork(), makeCourseWork()]
+  courseId = ""
 
-  async list(): Promise<CourseWork[]> {
+  async list(courseId: string): Promise<CourseWork[]> {
+    this.courseId = courseId
     return this.courseWorks
   }
 }
