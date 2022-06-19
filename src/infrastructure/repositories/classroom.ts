@@ -87,8 +87,8 @@ const listStudents = async (classroom: classroom_v1.Classroom, courseId: string)
 }
 
 export class ClassroomRepository implements ListCourseWorksRepository, ListCoursesRepository, ListStudentsRepository {
-  async listCourseWorks(): Promise<CourseWork[]> {
-    const courseWorks = await getAllCourseWorks(classroomHelper.instance, classroomHelper.courseId)
+  async listCourseWorks(courseId: string): Promise<CourseWork[]> {
+    const courseWorks = await getAllCourseWorks(classroomHelper.instance, courseId)
     return courseWorks
   }
 
