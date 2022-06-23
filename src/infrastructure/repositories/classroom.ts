@@ -35,34 +35,23 @@ const getAllSubmissions = async (classroom: classroom_v1.Classroom, courseId: st
     states: ['TURNED_IN']
   })
 
-  const submissions = response.data.studentSubmissions.map<Submission>(submmission => ({
-    id: submmission.id,
-    late: submmission.late ? true : false,
-    studentId: submmission.userId,
-    student: null
-  }))
+  const allStudents = await listStudents(classroom, courseId, [], '')
 
-  for (const submission of submissions) {
-    const student = await getStudent(classroom, courseId, submission.studentId)
-    submission.student = student
+  let submissions: Submission[] = []
+
+  for (const submission of response.data.studentSubmissions) {
+    for (const student of allStudents) {
+      if (submission.userId === student.id) {
+        submissions.push({
+          student,
+          id: submission.id,
+          late: submission.late ? true : false
+        })
+      }
+    }
   }
 
   return submissions
-}
-
-const getStudent = async (classroom: classroom_v1.Classroom, courseId: string, userId: string): Promise<Student> => {
-  const response = await classroom.courses.students.get({
-    courseId,
-    userId,
-    fields: 'profile.id,profile.name.fullName,profile.emailAddress'
-  })
-
-  const student: Student = {
-    email: response.data.profile.emailAddress,
-    name: response.data.profile.name.fullName
-  }
-
-  return student
 }
 
 const listCourses = async (classroom: classroom_v1.Classroom): Promise<Course[]> => {
@@ -76,21 +65,36 @@ const listCourses = async (classroom: classroom_v1.Classroom): Promise<Course[]>
   return courses
 }
 
-const listStudents = async (classroom: classroom_v1.Classroom, courseId: string): Promise<Student[]> => {
-  const response = await classroom.courses.students.list({ courseId })
+const listStudents = async (classroom: classroom_v1.Classroom, courseId: string, students: Student[], nextPageToken: string): Promise<Student[]> => {
+  const response = await classroom.courses.students.list({
+    courseId,
+    pageToken: nextPageToken
+  })
 
-  const students = response.data.students.map<Student>(student => ({
+  const newStudents = response.data.students.map<Student>(student => ({
+    id: student.profile.id,
     name: student.profile.name.fullName,
     email: student.profile.emailAddress
   }))
+
+  // adds up the old students with the brand new fetched ones
+  students = [...students, ...newStudents]
+
+  if (response.data.nextPageToken) {
+    return listStudents(classroom, courseId, students, response.data.nextPageToken)
+  }
 
   return students
 }
 
 export class ClassroomRepository implements ListCourseWorksRepository, ListCoursesRepository, ListStudentsRepository {
   async listCourseWorks(courseId: string): Promise<CourseWork[]> {
-    const courseWorks = await getAllCourseWorks(classroomHelper.instance, courseId)
-    return courseWorks
+    try {
+      const courseWorks = await getAllCourseWorks(classroomHelper.instance, courseId)
+      console.log("course works")
+      return courseWorks
+    } catch (error) {
+    }
   }
 
   async listCourses(): Promise<Course[]> {
@@ -98,6 +102,6 @@ export class ClassroomRepository implements ListCourseWorksRepository, ListCours
   }
 
   async listStudents(courseId: string): Promise<Student[]> {
-    return await listStudents(classroomHelper.instance, courseId)
+    return await listStudents(classroomHelper.instance, courseId, [], "")
   }
 }
